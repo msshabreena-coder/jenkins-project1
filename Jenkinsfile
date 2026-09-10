@@ -9,19 +9,17 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Show BuildInfo') {
             steps {
-                bat 'python -m py_compile app.py'
-                echo 'Build successful: app.py compiled with no syntax errors'
+                echo "Build Number: ${env.BUILD_NUMBER}"
+                echo "Job Name: ${env.JOB_NAME}"
+                echo "Workspace: ${env.WORKSPACE}"
             }
         }
 
-        stage('Deploy') {
+        stage('RunLinter') {
             steps {
-                input message: 'Approve deployment to production?',
-                      ok: 'Deploy'
-
-                bat 'python app.py'
+                bat 'flake8 app.py'
             }
         }
     }
