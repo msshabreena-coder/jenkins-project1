@@ -1,4 +1,4 @@
-import os
+def multiply(a, b):
+    return a * b
 
-def greet(name):
-    return "Hello," + name
+print(multiply(4, 5))
