@@ -9,18 +9,20 @@ pipeline {
             }
         }
 
-        stage('Show BuildInfo') {
+        stage('CompileCheck') {
             steps {
-                echo "Build Number: ${env.BUILD_NUMBER}"
-                echo "Job Name: ${env.JOB_NAME}"
-                echo "Workspace: ${env.WORKSPACE}"
+                bat 'python -m py_compile app.py'
             }
         }
+    }
 
-        stage('RunLinter') {
-            steps {
-                bat 'flake8 app.py'
-            }
+    post {
+        success {
+            echo 'Build succeeded: app.py has no syntax errors.'
+        }
+
+        failure {
+            echo 'Build failed: check app.py for syntax errors.'
         }
     }
 }
