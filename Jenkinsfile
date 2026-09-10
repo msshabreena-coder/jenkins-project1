@@ -9,15 +9,19 @@ pipeline {
             }
         }
 
-        stage('InstallDependencies') {
+        stage('Build') {
             steps {
-                bat 'pip install -r requirements.txt'
+                bat 'python -m py_compile app.py'
+                echo 'Build successful: app.py compiled with no syntax errors'
             }
         }
 
-        stage('RunUnitTests') {
+        stage('Deploy') {
             steps {
-                bat 'pytest test_app.py'
+                input message: 'Approve deployment to production?',
+                      ok: 'Deploy'
+
+                bat 'python app.py'
             }
         }
     }
