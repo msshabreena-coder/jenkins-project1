@@ -1,2 +1,2 @@
-print("Deploying application version 1.0...")
-print("Deployment complete.")
+def greet(name):
+    return "Hello," + name
